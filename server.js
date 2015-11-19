@@ -7,7 +7,8 @@ var config = require('./config');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(morgan());
+app.use(morgan('dev'));
+
 
 mongoose.connect(config.database,function(err){
 	if(err){
@@ -16,6 +17,9 @@ mongoose.connect(config.database,function(err){
 		console.log('database connected');
 	}
 });
+var api = require('./app/router/api')(app,express);
+app.use('/api',api);
+
 
 app.get('*',function(req,res,next){
 	return res.sendFile(__dirname + '/public/views/index.html');

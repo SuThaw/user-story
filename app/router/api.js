@@ -54,6 +54,23 @@ module.exports = function(app,express){
 		});
 	});
 
+	app.use(function(req,res,next){
+		var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+
+		if(token){
+			jsonwebtoken.verify(token,secretKey,function(err,decoded){
+				if(err) return res.status(403).send({success:false,message:'failed to authenticate user'});
+				
+					req.decoded = decoded;
+					next();
+				
+			});
+		}else{
+			res.status(403).send({success:false,message:'No Token Provided'});
+
+		}
+	});
+
 	api.get('/users',function(req,res,next){
 		User.find({},function(err,users){
 			if(err) return res.send(err);

@@ -54,11 +54,11 @@ module.exports = function(app,express){
 		});
 	});
 
-	app.use(function(req,res,next){
+	api.use(function(req,res,next){
 		var token = req.body.token || req.param('token') || req.headers['x-access-token'];
 
 		if(token){
-			jsonwebtoken.verify(token,secretKey,function(err,decoded){
+			jwt.verify(token,secretKey,function(err,decoded){
 				if(err) return res.status(403).send({success:false,message:'failed to authenticate user'});
 				
 					req.decoded = decoded;

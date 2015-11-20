@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var Story = require('../models/story');
 var config = require('../../config');
 var secretKey = config.secret;
 var jwt = require('jsonwebtoken');
@@ -35,7 +36,8 @@ module.exports = function(app,express){
 	api.post('/login',function(req,res,next){
 		User
 			.findOne({username:req.body.username})
-			.select('password')
+			.select('password name username')
+
 			.exec(function(err,user){
 				if(err) return res.status(500).send(err);
 				if(!user) return res.status(400).send({message:"User Doesn't exists"});
@@ -43,7 +45,7 @@ module.exports = function(app,express){
 				if(!validPassword) return res.status(400).send({message:"Password is not correct"});
 				
 				var token = createToken(user);
-				console.log(token);
+				
 
 				return res.json({
 							success:true,
@@ -60,7 +62,7 @@ module.exports = function(app,express){
 		if(token){
 			jwt.verify(token,secretKey,function(err,decoded){
 				if(err) return res.status(403).send({success:false,message:'failed to authenticate user'});
-				
+					
 					req.decoded = decoded;
 					next();
 				
@@ -77,6 +79,33 @@ module.exports = function(app,express){
 			res.json(users);
 		});	
 	});
+
+	api
+		.route('/story')
+		.post(function(req,res){
+			var story = new Story(
+								{
+									creator:req.decoded.id,
+									content: req.body.content
+								}
+							);
+			story.save(function(err,story){
+				if(err) return res.status(500).send(err);
+				return res.send({message:'Story has been created'});
+			});
+
+		})
+		.get(function(req,res){
+			Story.find({creator:req.decoded.id},function(err,stories){
+				if(err) return res.status(500).send(err);
+				res.json(stories);
+			});
+		});
+
+	api
+		.get('/me',function(req,res){
+			return res.json(req.decoded);
+		});
 
 	return api;
 };

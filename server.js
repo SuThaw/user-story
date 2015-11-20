@@ -7,7 +7,9 @@ var config = require('./config');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(express.static(__dirname + '/public'));
 
 
 mongoose.connect(config.database,function(err){
@@ -22,7 +24,7 @@ app.use('/api',api);
 
 
 app.get('*',function(req,res,next){
-	return res.sendFile(__dirname + '/public/views/index.html');
+	return res.sendFile(__dirname + '/public/app/views/index.html');
 });
 
 app.listen(config.port,function(){

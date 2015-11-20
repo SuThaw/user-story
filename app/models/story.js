@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var StorySchema = new Schema({
 	creator : {
-				type:Schmea.Types.ObjectId,
+				type:Schema.Types.ObjectId,
 				ref:'User'
 			},
 	content: String,

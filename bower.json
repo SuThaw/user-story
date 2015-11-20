@@ -1,0 +1,22 @@
+{
+  "name": "userstory",
+  "description": "Thi is a user Story app",
+  "main": "server.js",
+  "authors": [
+    "SuThaw"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/SuThaw/user-story",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7"
+  }
+}

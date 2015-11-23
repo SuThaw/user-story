@@ -5,11 +5,31 @@
 		<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
 
 	</head>
-	<body >
+	<header>
+		<div class="navbar navbar-default">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">
+					<span class="glyphicon glyphicon-book"></span>
+					User Story
+				</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="/users"></a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-if="!main.loggedIn"><a href="/login">Login</a></li>
+				<li ng-if="main.loggedIn"><a href="#">Hello {{main.username}}</a></li>
+				<li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">Logout</a></li>
+			</ul>
+
+		</div>
+	</header>
+	<main class="container">
 		<div ng-view></div>
+	</main>
+		
 		<script type="text/javascript" src="libs/angular/angular.min.js"></script>
 		<script type="text/javascript" src="libs/angular-route/bower-angular-route-1.4.8/angular-route.min.js"></script>
-		
 		<script type="text/javascript" src="app/services/authService.js"></script>
 		<script type="text/javascript" src="app/controllers/mainCtrl.js"></script>
 		<script type="text/javascript" src="app/app.route.js"></script>

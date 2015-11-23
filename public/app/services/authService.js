@@ -45,7 +45,7 @@ angular
 		authTokenFactory.getToken = function(){
 			return $window.localStorage.getItem('token');
 		},
-		authTokenFactory.setToken = function(){
+		authTokenFactory.setToken = function(token){
 			if(token)
 				$window.localStorage.setItem('token',token)
 			else

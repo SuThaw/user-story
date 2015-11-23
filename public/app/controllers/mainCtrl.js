@@ -1,9 +1,9 @@
 angular
 	.module('mainCtrl',[])
-	.controller('MainController',function($rootscope,$location,Auth){
+	.controller('MainController',function($rootScope,$location,Auth){
 		var vm = this;
 
-		vm.loggedIn = Auth.isLogged();
+		vm.loggedIn = Auth.isLoggedIn();
 
 		$rootScope.$on('$routeChangeStart',function(){
 			vm.loggedIn = Auth.isLoggedIn();
@@ -16,6 +16,7 @@ angular
 		});	
 
 		vm.doLogin = function(){
+			console.log('hello');
 			vm.processing = true;
 
 			vm.error = '';

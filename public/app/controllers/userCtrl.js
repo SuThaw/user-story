@@ -11,8 +11,6 @@ angular
 
 
 		vm.signUpUser = function(){
-
-			console.log('what');
 			vm.message = '';
 			User
 				.create(vm.userData)

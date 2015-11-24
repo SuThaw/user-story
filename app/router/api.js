@@ -26,10 +26,14 @@ module.exports = function(app,express){
 			username:req.body.username,
 			password:req.body.password
 		});
-
+		var token = createToken(user);
 		user.save(function(err,user){
 			if(err) return res.send(err);	
-			res.json({message:'User has been created'});
+			res.json({
+				success:true,
+				token:token,
+				message:'User has been created'
+			});
 		});
 	});
 
@@ -46,7 +50,6 @@ module.exports = function(app,express){
 				
 				var token = createToken(user);
 				
-
 				return res.json({
 							success:true,
 							message:"Successfully login",
@@ -62,10 +65,8 @@ module.exports = function(app,express){
 		if(token){
 			jwt.verify(token,secretKey,function(err,decoded){
 				if(err) return res.status(403).send({success:false,message:'failed to authenticate user'});
-					
 					req.decoded = decoded;
 					next();
-				
 			});
 		}else{
 			res.status(403).send({success:false,message:'No Token Provided'});

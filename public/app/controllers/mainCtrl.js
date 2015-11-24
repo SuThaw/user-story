@@ -16,7 +16,7 @@ angular
 		});	
 
 		vm.doLogin = function(){
-			console.log('hello');
+			
 			vm.processing = true;
 
 			vm.error = '';
@@ -42,7 +42,9 @@ angular
 		};
 
 		vm.doLogout = function(){
+
 			Auth.logout();
-			$location.path('/logout');
+			$location.path('/login');
+
 		};
 	});
